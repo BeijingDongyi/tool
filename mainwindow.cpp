@@ -13,6 +13,8 @@
 #include <QStringList>
 #include <QShortcut>
 #include <QTimer>
+#include <QDialogButtonBox>
+#include <QGroupBox>
 #include <QtGlobal>
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
@@ -163,11 +165,11 @@ BigDataTableModel::BigDataTableModel(QObject *parent)
 {
 }
 
-void BigDataTableModel::setData(const QVector<QVector<QString>>* data, const QVector<int>& redColStartRows, const QVector<int>& displayColNums)
+void BigDataTableModel::setData(const QVector<QVector<QString>>* data, const QVector<QVector<RedRange>>& redRanges, const QVector<int>& displayColNums)
 {
     beginResetModel();
     m_rawData = data;
-    m_redColStartRows = redColStartRows;
+    m_redRanges = redRanges;
     m_displayColNums = displayColNums;
     endResetModel();
 }
@@ -196,8 +198,12 @@ QVariant BigDataTableModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole) return getData(row, col);
     if (role == Qt::ForegroundRole) {
-        if (col >= 0 && col < m_redColStartRows.size() && m_redColStartRows[col] != -1 && row >= m_redColStartRows[col])
-            return QColor(Qt::red);
+        if (col >= 0 && col < m_redRanges.size()) {
+            const auto& ranges = m_redRanges[col];
+            auto it = std::lower_bound(ranges.begin(), ranges.end(), row,
+                [](const RedRange& range, int value) { return range.last < value; });
+            if (it != ranges.end() && row >= it->first && row <= it->last) return QColor(Qt::red);
+        }
         return QColor(Qt::black);
     }
     if (role == Qt::BackgroundRole) {
@@ -234,8 +240,9 @@ PlotWidget::PlotWidget(QWidget *parent)
     , m_hoveredCurveIdx(-1)
 {
     setMouseTracking(true);
-    setMinimumSize(800, 600);
+    setMinimumSize(480, 320);
     setAttribute(Qt::WA_OpaquePaintEvent);
+    m_hoverTimer.start();
 }
 
 void PlotWidget::setZoomEnabled(bool enabled)
@@ -393,10 +400,10 @@ void PlotWidget::getPlotRect(int& marginL, int& marginT, int& marginR, int& marg
 
     marginL = qMax(110, tickFm.horizontalAdvance("-123456789") + labelFm.height() + 36);
     marginT = qMax(50, labelFm.height() + 24);
-    marginR = 220;
+    marginR = qBound(130, width() / 5, 220);
     marginB = qMax(100, tickFm.height() * 2 + labelFm.height() + 34);
-    plotW = qMax(width() - marginL - marginR, 100);
-    plotH = qMax(height() - marginT - marginB, 100);
+    plotW = qMax(width() - marginL - marginR, 20);
+    plotH = qMax(height() - marginT - marginB, 20);
 }
 
 void PlotWidget::updateBackgroundCache()
@@ -672,8 +679,10 @@ void PlotWidget::mousePressEvent(QMouseEvent *event)
         int marginL, marginT, marginR, marginB, plotW, plotH;
         getPlotRect(marginL, marginT, marginR, marginB, plotW, plotH);
         QRect plotRect(marginL, marginT, plotW, plotH);
-        if (m_zoomEnabled && plotRect.contains(event->pos())) {
-            m_dragStart = event->pos();
+        // 给坐标轴边缘留出少量命中空间，鼠标压在最左/最右边线上也能开始框选。
+        if (m_zoomEnabled && plotRect.adjusted(-8, -8, 8, 8).contains(event->pos())) {
+            m_dragStart = QPoint(qBound(plotRect.left(), event->pos().x(), plotRect.right()),
+                                 qBound(plotRect.top(), event->pos().y(), plotRect.bottom()));
             m_dragEnd = m_dragStart;
             m_isDragging = true;
         }
@@ -710,11 +719,12 @@ void PlotWidget::mouseMoveEvent(QMouseEvent *event)
 
         update(plotRect);
     }
-    else if (m_mouseInWidget || rect().contains(oldMousePos))
+    else if ((m_mouseInWidget || rect().contains(oldMousePos)) && m_hoverTimer.elapsed() >= 16)
     {
         int marginL, marginT, marginR, marginB, plotW, plotH;
         getPlotRect(marginL, marginT, marginR, marginB, plotW, plotH);
         update(QRect(marginL - 80, marginT, width() - marginL - marginR + 300, height() - marginT - marginB));
+        m_hoverTimer.restart();
     }
 
     QWidget::mouseMoveEvent(event);
@@ -737,7 +747,7 @@ void PlotWidget::mouseReleaseEvent(QMouseEvent *event)
 
         QRect selectedRect(m_dragStart, dragEnd);
         selectedRect = selectedRect.normalized().intersected(plotRect);
-        if (selectedRect.width() < 5 || selectedRect.height() < 5) {
+        if (selectedRect.width() < 3 || selectedRect.height() < 3) {
             m_dragStart = QPoint();
             m_dragEnd = QPoint();
             update();
@@ -745,7 +755,9 @@ void PlotWidget::mouseReleaseEvent(QMouseEvent *event)
         }
 
         QPoint start = selectedRect.topLeft();
-        QPoint end = selectedRect.bottomRight();
+        QPoint end = selectedRect.bottomRight() + QPoint(1, 1);
+        end.setX(qMin(end.x(), plotRect.right() + 1));
+        end.setY(qMin(end.y(), plotRect.bottom() + 1));
 
         double xRange = m_currentXMax - m_currentXMin;
         double yRange = m_currentYMax - m_currentYMin;
@@ -893,7 +905,7 @@ PlotDialog::PlotDialog(QWidget *parent, const QList<PlotData>& plotData,
 {
     plotWindowCounter++;
     setWindowTitle(QString("画布%1").arg(plotWindowCounter));
-    setMinimumSize(1400, 800);
+    setMinimumSize(800, 500);
     setSizeGripEnabled(true);
     setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowSystemMenuHint |
                    Qt::WindowMaximizeButtonHint | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint);
@@ -935,6 +947,11 @@ PlotDialog::PlotDialog(QWidget *parent, const QList<PlotData>& plotData,
     m_shiftLeftBtn->setToolTip("所有当前曲线列号 -1 后重绘");
     m_shiftRightBtn->setToolTip("所有当前曲线列号 +1 后重绘");
     m_zoomBtn->setToolTip("快捷键 Z：开启/关闭框选放大");
+    m_resetBtn->setToolTip("快捷键 R：还原视图并保持当前放大模式");
+    m_hideAllBtn->setToolTip("快捷键 H：隐藏全部曲线");
+    m_showAllBtn->setToolTip("快捷键 S：显示全部曲线");
+    m_shiftLeftBtn->setToolTip("快捷键 ←：所有当前曲线列号 -1 后重绘");
+    m_shiftRightBtn->setToolTip("快捷键 →：所有当前曲线列号 +1 后重绘");
     m_shiftLeftBtn->setFixedWidth(48);
     m_shiftRightBtn->setFixedWidth(48);
     m_applyScaleBtn->setStyleSheet(btnStyle);
@@ -999,6 +1016,17 @@ PlotDialog::PlotDialog(QWidget *parent, const QList<PlotData>& plotData,
     zoomShortcut->setContext(Qt::WindowShortcut);
     connect(zoomShortcut, &QShortcut::activated, this, &PlotDialog::onZoomInClicked);
 
+    const auto addShortcut = [this](const QKeySequence& key, void (PlotDialog::*slot)()) {
+        QShortcut* shortcut = new QShortcut(key, this);
+        shortcut->setContext(Qt::WindowShortcut);
+        connect(shortcut, &QShortcut::activated, this, slot);
+    };
+    addShortcut(QKeySequence(Qt::Key_R), &PlotDialog::onResetClicked);
+    addShortcut(QKeySequence(Qt::Key_H), &PlotDialog::onHideAllClicked);
+    addShortcut(QKeySequence(Qt::Key_S), &PlotDialog::onShowAllClicked);
+    addShortcut(QKeySequence(Qt::Key_Left), &PlotDialog::onShiftLeftClicked);
+    addShortcut(QKeySequence(Qt::Key_Right), &PlotDialog::onShiftRightClicked);
+
     QShortcut* closeReturnShortcut = new QShortcut(QKeySequence(Qt::Key_Return), this);
     closeReturnShortcut->setContext(Qt::WindowShortcut);
     connect(closeReturnShortcut, &QShortcut::activated, this, &QDialog::close);
@@ -1025,10 +1053,6 @@ void PlotDialog::onZoomInClicked()
 
 void PlotDialog::onResetClicked()
 {
-    m_zoomMode = false;
-    m_zoomBtn->setText("放大（框选区域）");
-    setCursor(Qt::ArrowCursor);
-    m_plotWidget->setZoomEnabled(false);
     m_plotWidget->resetView();
 }
 
@@ -1211,7 +1235,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::initUI()
 {
     setWindowTitle("大数据量TXT可视化工具");
-    setMinimumSize(1400, 900);
+    setMinimumSize(900, 600);
 
     m_tableModel = new BigDataTableModel(this);
     m_tableModel->setColGroupMap(m_colToGroupIndex);
@@ -1602,7 +1626,7 @@ void MainWindow::loadTxt()
     progress.setValue(55);
     progress.setLabelText("正在处理数据...（仅检测指定列不变值）");
 
-    QVector<int> redRows(cols, -1);
+    QVector<QVector<RedRange>> redRanges(cols);
     for (int c = 0; c < cols; ++c) {
         if (progress.wasCanceled()) {
             data.clear();
@@ -1612,22 +1636,23 @@ void MainWindow::loadTxt()
             return;
         }
 
-        int lastValidRow = -1;
-        for (int r = rows - 1; r >= 0; --r) {
-            if (c < numericValidData[r].size() && numericValidData[r][c]) {
-                lastValidRow = r;
-                break;
+        int runStart = -1;
+        double runValue = 0.0;
+        for (int r = 0; r <= rows; ++r) {
+            const bool valid = r < rows && c < numericValidData[r].size() && numericValidData[r][c];
+            const double value = valid ? numericData[r][c] : 0.0;
+            if (valid && runStart >= 0 && qFuzzyCompare(value, runValue)) continue;
+
+            if (runStart >= 0 && r - runStart >= 10)
+                redRanges[c].append({runStart, r - 1});
+
+            if (valid) {
+                runStart = r;
+                runValue = value;
+            } else {
+                runStart = -1;
             }
         }
-        if (lastValidRow <= 0) continue;
-
-        double last = numericData[lastValidRow][c];
-        int start = lastValidRow;
-        for (int r = lastValidRow - 1; r >= 0; --r) {
-            if (c < numericValidData[r].size() && numericValidData[r][c] && qFuzzyCompare(numericData[r][c], last)) start = r;
-            else break;
-        }
-        if (start < lastValidRow) redRows[c] = start;
 
         int redProgress = 60 + qMin((int)((c * 30) / cols), 30);
         progress.setValue(redProgress);
@@ -1639,7 +1664,7 @@ void MainWindow::loadTxt()
     m_numericData = std::move(numericData);
     m_numericValidData = std::move(numericValidData);
     QVector<int> widths = calculateColMaxWidth();
-    m_tableModel->setData(&m_rawData, redRows, m_selectedReadCols);
+    m_tableModel->setData(&m_rawData, redRanges, m_selectedReadCols);
     for (int c = 0; c < cols && c < widths.size(); ++c) {
         m_tableView->setColumnWidth(c, widths[c]);
     }
@@ -1745,9 +1770,42 @@ void MainWindow::plotMultiCanvasByCode()
         groupCols[groupIdx].append(col);
     }
 
+    QDialog selector(this);
+    selector.setWindowTitle("选择要绘制的分组");
+    QVBoxLayout* selectorLayout = new QVBoxLayout(&selector);
+    QLabel* selectorTip = new QLabel("请选择需要分别绘制到画布的组：", &selector);
+    selectorLayout->addWidget(selectorTip);
+    QVector<QCheckBox*> groupChecks;
+    for (auto it = groupCols.cbegin(); it != groupCols.cend(); ++it) {
+        const QList<int>& values = it.value();
+        QString rangeText = values.isEmpty() ? QString() : QString("（列 %1–%2，共 %3 列）")
+            .arg(values.first()).arg(values.last()).arg(values.size());
+        QCheckBox* check = new QCheckBox(QString("组 %1 %2").arg(it.key()).arg(rangeText), &selector);
+        check->setProperty("groupIndex", it.key());
+        check->setChecked(true);
+        groupChecks.append(check);
+        selectorLayout->addWidget(check);
+    }
+    QDialogButtonBox* buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &selector);
+    buttons->button(QDialogButtonBox::Ok)->setText("绘制所选组");
+    buttons->button(QDialogButtonBox::Cancel)->setText("取消");
+    connect(buttons, &QDialogButtonBox::accepted, &selector, &QDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, &selector, &QDialog::reject);
+    selectorLayout->addWidget(buttons);
+    if (selector.exec() != QDialog::Accepted) return;
+
+    QSet<int> selectedGroups;
+    for (QCheckBox* check : groupChecks)
+        if (check->isChecked()) selectedGroups.insert(check->property("groupIndex").toInt());
+    if (selectedGroups.isEmpty()) {
+        QMessageBox::information(this, "提示", "请至少选择一个分组");
+        return;
+    }
+
     static int off = 0;
     for (auto it = groupCols.begin(); it != groupCols.end(); ++it) {
         int groupIdx = it.key();
+        if (!selectedGroups.contains(groupIdx)) continue;
         const QList<int>& groupColList = it.value();
         
         QList<PlotData> list;

@@ -1,4 +1,4 @@
-# Install script for directory: /home/zhx/图片/txtDataViewer_super/txtDataViewer
+# Install script for directory: /home/zhx/视频/txtDataViewer-master
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/zhx/图片/txtDataViewer_super/txtDataViewer/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/zhx/视频/txtDataViewer-master/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

@@ -13,6 +13,11 @@ ICON_FILE="$ICON_DIR/$ICON_NAME.png"
 APPS_DIR="$REAL_HOME/.local/share/applications"
 DESKTOP_FILE="$APPS_DIR/$DESKTOP_ID"
 
+if [ ! -x "$APP_DIR/build/main" ]; then
+    echo "未找到已编译程序，正在自动编译..."
+    "$APP_DIR/build_release.sh"
+fi
+
 if [ ! -x "$LAUNCHER" ]; then
     chmod +x "$LAUNCHER"
 fi

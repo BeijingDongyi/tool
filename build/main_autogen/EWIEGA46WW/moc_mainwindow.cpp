@@ -1,19 +1,20 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.15.3)
+** Created by: The Qt Meta Object Compiler version 68 (Qt 6.2.4)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #include <memory>
 #include "../../../mainwindow.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.15.3. It"
+#elif Q_MOC_OUTPUT_REVISION != 68
+#error "This file was generated using the moc from 6.2.4. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -22,21 +23,18 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_CheckableHeaderView_t {
-    QByteArrayData data[5];
+    const uint offsetsAndSize[10];
     char stringdata0[54];
 };
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_CheckableHeaderView_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
+#define QT_MOC_LITERAL(ofs, len) \
+    uint(offsetof(qt_meta_stringdata_CheckableHeaderView_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_CheckableHeaderView_t qt_meta_stringdata_CheckableHeaderView = {
     {
-QT_MOC_LITERAL(0, 0, 19), // "CheckableHeaderView"
-QT_MOC_LITERAL(1, 20, 17), // "checkStateChanged"
-QT_MOC_LITERAL(2, 38, 0), // ""
-QT_MOC_LITERAL(3, 39, 6), // "column"
-QT_MOC_LITERAL(4, 46, 7) // "checked"
+QT_MOC_LITERAL(0, 19), // "CheckableHeaderView"
+QT_MOC_LITERAL(20, 17), // "checkStateChanged"
+QT_MOC_LITERAL(38, 0), // ""
+QT_MOC_LITERAL(39, 6), // "column"
+QT_MOC_LITERAL(46, 7) // "checked"
 
     },
     "CheckableHeaderView\0checkStateChanged\0"
@@ -47,7 +45,7 @@ QT_MOC_LITERAL(4, 46, 7) // "checked"
 static const uint qt_meta_data_CheckableHeaderView[] = {
 
  // content:
-       8,       // revision
+      10,       // revision
        0,       // classname
        0,    0, // classinfo
        1,   14, // methods
@@ -57,8 +55,8 @@ static const uint qt_meta_data_CheckableHeaderView[] = {
        0,       // flags
        1,       // signalCount
 
- // signals: name, argc, parameters, tag, flags
-       1,    2,   19,    2, 0x06 /* Public */,
+ // signals: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    2,   20,    2, 0x06,    1 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Bool,    3,    4,
@@ -72,7 +70,7 @@ void CheckableHeaderView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         auto *_t = static_cast<CheckableHeaderView *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->checkStateChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 0: _t->checkStateChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -87,12 +85,18 @@ void CheckableHeaderView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject CheckableHeaderView::staticMetaObject = { {
+const QMetaObject CheckableHeaderView::staticMetaObject = { {
     QMetaObject::SuperData::link<QHeaderView::staticMetaObject>(),
-    qt_meta_stringdata_CheckableHeaderView.data,
+    qt_meta_stringdata_CheckableHeaderView.offsetsAndSize,
     qt_meta_data_CheckableHeaderView,
     qt_static_metacall,
     nullptr,
+qt_incomplete_metaTypeArray<qt_meta_stringdata_CheckableHeaderView_t
+, QtPrivate::TypeAndForceComplete<CheckableHeaderView, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
+
+
+
+>,
     nullptr
 } };
 
@@ -121,7 +125,7 @@ int CheckableHeaderView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 1;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 1)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
         _id -= 1;
     }
     return _id;
@@ -134,17 +138,14 @@ void CheckableHeaderView::checkStateChanged(int _t1, bool _t2)
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 struct qt_meta_stringdata_BigDataTableModel_t {
-    QByteArrayData data[1];
+    const uint offsetsAndSize[2];
     char stringdata0[18];
 };
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_BigDataTableModel_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
+#define QT_MOC_LITERAL(ofs, len) \
+    uint(offsetof(qt_meta_stringdata_BigDataTableModel_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_BigDataTableModel_t qt_meta_stringdata_BigDataTableModel = {
     {
-QT_MOC_LITERAL(0, 0, 17) // "BigDataTableModel"
+QT_MOC_LITERAL(0, 17) // "BigDataTableModel"
 
     },
     "BigDataTableModel"
@@ -154,7 +155,7 @@ QT_MOC_LITERAL(0, 0, 17) // "BigDataTableModel"
 static const uint qt_meta_data_BigDataTableModel[] = {
 
  // content:
-       8,       // revision
+      10,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
@@ -175,12 +176,18 @@ void BigDataTableModel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
     (void)_a;
 }
 
-QT_INIT_METAOBJECT const QMetaObject BigDataTableModel::staticMetaObject = { {
+const QMetaObject BigDataTableModel::staticMetaObject = { {
     QMetaObject::SuperData::link<QAbstractTableModel::staticMetaObject>(),
-    qt_meta_stringdata_BigDataTableModel.data,
+    qt_meta_stringdata_BigDataTableModel.offsetsAndSize,
     qt_meta_data_BigDataTableModel,
     qt_static_metacall,
     nullptr,
+qt_incomplete_metaTypeArray<qt_meta_stringdata_BigDataTableModel_t
+, QtPrivate::TypeAndForceComplete<BigDataTableModel, std::true_type>
+
+
+
+>,
     nullptr
 } };
 
@@ -204,22 +211,19 @@ int BigDataTableModel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     return _id;
 }
 struct qt_meta_stringdata_PlotWidget_t {
-    QByteArrayData data[6];
+    const uint offsetsAndSize[12];
     char stringdata0[71];
 };
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_PlotWidget_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
+#define QT_MOC_LITERAL(ofs, len) \
+    uint(offsetof(qt_meta_stringdata_PlotWidget_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_PlotWidget_t qt_meta_stringdata_PlotWidget = {
     {
-QT_MOC_LITERAL(0, 0, 10), // "PlotWidget"
-QT_MOC_LITERAL(1, 11, 18), // "curveInvertClicked"
-QT_MOC_LITERAL(2, 30, 0), // ""
-QT_MOC_LITERAL(3, 31, 8), // "curveIdx"
-QT_MOC_LITERAL(4, 40, 22), // "curveVisibilityChanged"
-QT_MOC_LITERAL(5, 63, 7) // "visible"
+QT_MOC_LITERAL(0, 10), // "PlotWidget"
+QT_MOC_LITERAL(11, 18), // "curveInvertClicked"
+QT_MOC_LITERAL(30, 0), // ""
+QT_MOC_LITERAL(31, 8), // "curveIdx"
+QT_MOC_LITERAL(40, 22), // "curveVisibilityChanged"
+QT_MOC_LITERAL(63, 7) // "visible"
 
     },
     "PlotWidget\0curveInvertClicked\0\0curveIdx\0"
@@ -230,7 +234,7 @@ QT_MOC_LITERAL(5, 63, 7) // "visible"
 static const uint qt_meta_data_PlotWidget[] = {
 
  // content:
-       8,       // revision
+      10,       // revision
        0,       // classname
        0,    0, // classinfo
        2,   14, // methods
@@ -240,9 +244,9 @@ static const uint qt_meta_data_PlotWidget[] = {
        0,       // flags
        2,       // signalCount
 
- // signals: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x06 /* Public */,
-       4,    2,   27,    2, 0x06 /* Public */,
+ // signals: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    1,   26,    2, 0x06,    1 /* Public */,
+       4,    2,   29,    2, 0x06,    3 /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -257,8 +261,8 @@ void PlotWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<PlotWidget *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->curveInvertClicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->curveVisibilityChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 0: _t->curveInvertClicked((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 1: _t->curveVisibilityChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -280,12 +284,18 @@ void PlotWidget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject PlotWidget::staticMetaObject = { {
+const QMetaObject PlotWidget::staticMetaObject = { {
     QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
-    qt_meta_stringdata_PlotWidget.data,
+    qt_meta_stringdata_PlotWidget.offsetsAndSize,
     qt_meta_data_PlotWidget,
     qt_static_metacall,
     nullptr,
+qt_incomplete_metaTypeArray<qt_meta_stringdata_PlotWidget_t
+, QtPrivate::TypeAndForceComplete<PlotWidget, std::true_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>
+
+
+
+>,
     nullptr
 } };
 
@@ -314,7 +324,7 @@ int PlotWidget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 2)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
         _id -= 2;
     }
     return _id;
@@ -334,27 +344,24 @@ void PlotWidget::curveVisibilityChanged(int _t1, bool _t2)
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 struct qt_meta_stringdata_PlotDialog_t {
-    QByteArrayData data[11];
+    const uint offsetsAndSize[22];
     char stringdata0[166];
 };
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_PlotDialog_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
+#define QT_MOC_LITERAL(ofs, len) \
+    uint(offsetof(qt_meta_stringdata_PlotDialog_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_PlotDialog_t qt_meta_stringdata_PlotDialog = {
     {
-QT_MOC_LITERAL(0, 0, 10), // "PlotDialog"
-QT_MOC_LITERAL(1, 11, 15), // "onZoomInClicked"
-QT_MOC_LITERAL(2, 27, 0), // ""
-QT_MOC_LITERAL(3, 28, 14), // "onResetClicked"
-QT_MOC_LITERAL(4, 43, 19), // "onApplyScaleClicked"
-QT_MOC_LITERAL(5, 63, 20), // "onCurveInvertClicked"
-QT_MOC_LITERAL(6, 84, 8), // "curveIdx"
-QT_MOC_LITERAL(7, 93, 16), // "onHideAllClicked"
-QT_MOC_LITERAL(8, 110, 16), // "onShowAllClicked"
-QT_MOC_LITERAL(9, 127, 18), // "onShiftLeftClicked"
-QT_MOC_LITERAL(10, 146, 19) // "onShiftRightClicked"
+QT_MOC_LITERAL(0, 10), // "PlotDialog"
+QT_MOC_LITERAL(11, 15), // "onZoomInClicked"
+QT_MOC_LITERAL(27, 0), // ""
+QT_MOC_LITERAL(28, 14), // "onResetClicked"
+QT_MOC_LITERAL(43, 19), // "onApplyScaleClicked"
+QT_MOC_LITERAL(63, 20), // "onCurveInvertClicked"
+QT_MOC_LITERAL(84, 8), // "curveIdx"
+QT_MOC_LITERAL(93, 16), // "onHideAllClicked"
+QT_MOC_LITERAL(110, 16), // "onShowAllClicked"
+QT_MOC_LITERAL(127, 18), // "onShiftLeftClicked"
+QT_MOC_LITERAL(146, 19) // "onShiftRightClicked"
 
     },
     "PlotDialog\0onZoomInClicked\0\0onResetClicked\0"
@@ -367,7 +374,7 @@ QT_MOC_LITERAL(10, 146, 19) // "onShiftRightClicked"
 static const uint qt_meta_data_PlotDialog[] = {
 
  // content:
-       8,       // revision
+      10,       // revision
        0,       // classname
        0,    0, // classinfo
        8,   14, // methods
@@ -377,15 +384,15 @@ static const uint qt_meta_data_PlotDialog[] = {
        0,       // flags
        0,       // signalCount
 
- // slots: name, argc, parameters, tag, flags
-       1,    0,   54,    2, 0x08 /* Private */,
-       3,    0,   55,    2, 0x08 /* Private */,
-       4,    0,   56,    2, 0x08 /* Private */,
-       5,    1,   57,    2, 0x08 /* Private */,
-       7,    0,   60,    2, 0x08 /* Private */,
-       8,    0,   61,    2, 0x08 /* Private */,
-       9,    0,   62,    2, 0x08 /* Private */,
-      10,    0,   63,    2, 0x08 /* Private */,
+ // slots: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    0,   62,    2, 0x08,    1 /* Private */,
+       3,    0,   63,    2, 0x08,    2 /* Private */,
+       4,    0,   64,    2, 0x08,    3 /* Private */,
+       5,    1,   65,    2, 0x08,    4 /* Private */,
+       7,    0,   68,    2, 0x08,    6 /* Private */,
+       8,    0,   69,    2, 0x08,    7 /* Private */,
+       9,    0,   70,    2, 0x08,    8 /* Private */,
+      10,    0,   71,    2, 0x08,    9 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -409,7 +416,7 @@ void PlotDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->onZoomInClicked(); break;
         case 1: _t->onResetClicked(); break;
         case 2: _t->onApplyScaleClicked(); break;
-        case 3: _t->onCurveInvertClicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: _t->onCurveInvertClicked((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 4: _t->onHideAllClicked(); break;
         case 5: _t->onShowAllClicked(); break;
         case 6: _t->onShiftLeftClicked(); break;
@@ -419,12 +426,18 @@ void PlotDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject PlotDialog::staticMetaObject = { {
+const QMetaObject PlotDialog::staticMetaObject = { {
     QMetaObject::SuperData::link<QDialog::staticMetaObject>(),
-    qt_meta_stringdata_PlotDialog.data,
+    qt_meta_stringdata_PlotDialog.offsetsAndSize,
     qt_meta_data_PlotDialog,
     qt_static_metacall,
     nullptr,
+qt_incomplete_metaTypeArray<qt_meta_stringdata_PlotDialog_t
+, QtPrivate::TypeAndForceComplete<PlotDialog, std::true_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+
+
+>,
     nullptr
 } };
 
@@ -453,32 +466,29 @@ int PlotDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 8)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
         _id -= 8;
     }
     return _id;
 }
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[10];
+    const uint offsetsAndSize[20];
     char stringdata0[149];
 };
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
+#define QT_MOC_LITERAL(ofs, len) \
+    uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
-QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
-QT_MOC_LITERAL(1, 11, 7), // "loadTxt"
-QT_MOC_LITERAL(2, 19, 0), // ""
-QT_MOC_LITERAL(3, 20, 16), // "plotSelectedCols"
-QT_MOC_LITERAL(4, 37, 21), // "plotMultiCanvasByCode"
-QT_MOC_LITERAL(5, 59, 25), // "onColInputEditingFinished"
-QT_MOC_LITERAL(6, 85, 25), // "onHeaderCheckStateChanged"
-QT_MOC_LITERAL(7, 111, 6), // "column"
-QT_MOC_LITERAL(8, 118, 7), // "checked"
-QT_MOC_LITERAL(9, 126, 22) // "closeCurrentPlotDialog"
+QT_MOC_LITERAL(0, 10), // "MainWindow"
+QT_MOC_LITERAL(11, 7), // "loadTxt"
+QT_MOC_LITERAL(19, 0), // ""
+QT_MOC_LITERAL(20, 16), // "plotSelectedCols"
+QT_MOC_LITERAL(37, 21), // "plotMultiCanvasByCode"
+QT_MOC_LITERAL(59, 25), // "onColInputEditingFinished"
+QT_MOC_LITERAL(85, 25), // "onHeaderCheckStateChanged"
+QT_MOC_LITERAL(111, 6), // "column"
+QT_MOC_LITERAL(118, 7), // "checked"
+QT_MOC_LITERAL(126, 22) // "closeCurrentPlotDialog"
 
     },
     "MainWindow\0loadTxt\0\0plotSelectedCols\0"
@@ -491,7 +501,7 @@ QT_MOC_LITERAL(9, 126, 22) // "closeCurrentPlotDialog"
 static const uint qt_meta_data_MainWindow[] = {
 
  // content:
-       8,       // revision
+      10,       // revision
        0,       // classname
        0,    0, // classinfo
        6,   14, // methods
@@ -501,13 +511,13 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // flags
        0,       // signalCount
 
- // slots: name, argc, parameters, tag, flags
-       1,    0,   44,    2, 0x08 /* Private */,
-       3,    0,   45,    2, 0x08 /* Private */,
-       4,    0,   46,    2, 0x08 /* Private */,
-       5,    0,   47,    2, 0x08 /* Private */,
-       6,    2,   48,    2, 0x08 /* Private */,
-       9,    0,   53,    2, 0x08 /* Private */,
+ // slots: name, argc, parameters, tag, flags, initial metatype offsets
+       1,    0,   50,    2, 0x08,    1 /* Private */,
+       3,    0,   51,    2, 0x08,    2 /* Private */,
+       4,    0,   52,    2, 0x08,    3 /* Private */,
+       5,    0,   53,    2, 0x08,    4 /* Private */,
+       6,    2,   54,    2, 0x08,    5 /* Private */,
+       9,    0,   59,    2, 0x08,    8 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -530,19 +540,25 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->plotSelectedCols(); break;
         case 2: _t->plotMultiCanvasByCode(); break;
         case 3: _t->onColInputEditingFinished(); break;
-        case 4: _t->onHeaderCheckStateChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 4: _t->onHeaderCheckStateChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<bool>>(_a[2]))); break;
         case 5: _t->closeCurrentPlotDialog(); break;
         default: ;
         }
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject MainWindow::staticMetaObject = { {
+const QMetaObject MainWindow::staticMetaObject = { {
     QMetaObject::SuperData::link<QMainWindow::staticMetaObject>(),
-    qt_meta_stringdata_MainWindow.data,
+    qt_meta_stringdata_MainWindow.offsetsAndSize,
     qt_meta_data_MainWindow,
     qt_static_metacall,
     nullptr,
+qt_incomplete_metaTypeArray<qt_meta_stringdata_MainWindow_t
+, QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<int, std::false_type>, QtPrivate::TypeAndForceComplete<bool, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+
+
+>,
     nullptr
 } };
 
@@ -571,7 +587,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 6)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
         _id -= 6;
     }
     return _id;

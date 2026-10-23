@@ -37,6 +37,12 @@
 #include <QComboBox>
 #include <QDoubleValidator>
 #include <QPointer>
+#include <QElapsedTimer>
+
+struct RedRange {
+    int first;
+    int last;
+};
 
 struct PlotData {
     int colIndex;
@@ -83,7 +89,7 @@ class BigDataTableModel : public QAbstractTableModel
 public:
     explicit BigDataTableModel(QObject *parent = nullptr);
 
-    void setData(const QVector<QVector<QString>>* data, const QVector<int>& redColStartRows, const QVector<int>& displayColNums);
+    void setData(const QVector<QVector<QString>>* data, const QVector<QVector<RedRange>>& redRanges, const QVector<int>& displayColNums);
     void setColGroupMap(const QMap<int, int>& map);
     QString getData(int row, int col) const;
     QString getColumnLabel(int column) const;
@@ -95,7 +101,7 @@ public:
 
 private:
     const QVector<QVector<QString>>* m_rawData;
-    QVector<int> m_redColStartRows;
+    QVector<QVector<RedRange>> m_redRanges;
     QVector<int> m_displayColNums;
     QMap<int, int> m_colGroupMap;
 };
@@ -158,6 +164,7 @@ private:
     int m_hoveredCurveIdx;
     QList<QRectF> m_tipTextRects;
     QList<QRectF> m_checkBoxRects;
+    QElapsedTimer m_hoverTimer;
 
     const QList<QColor> m_curveColors = {
         QColor(255, 0, 0), QColor(0, 0, 0), QColor(0, 0, 255),
